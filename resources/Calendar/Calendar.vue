@@ -81,9 +81,6 @@ export default {
             this.$store.commit('setTheCalendarType', event.target.value)
         }
     },
-    mounted() {
-        this.$store.dispatch("getCalendars");
-    },
     setup() {
         return {
             dayjs

@@ -59,21 +59,6 @@ export default {
         }
     },
     actions: {
-        async getCalendars({ state }) {
-            const { data: { data } } = await axios.get(buildUrl('/api/feature-list', {
-                filter: {
-                    feature: 'calendar',
-                },
-                include: 'repeatable.users.user'
-            }));
-
-            state.calendars = data.map(calendar => {
-                calendar.repeatable = calendar.repeatable.map(e => new CalendarEvent(e))
-
-                return calendar;
-            });
-        },
-
         openEvent({ state }, event) {
             state.openEvent = event;
         }
@@ -182,9 +167,8 @@ export default {
                     ];
             }
         },
-        calendars(state) {
-            return state.calendars
+        calendars(state, rootGetters) {
+            return rootGetters?.features?.calendar ?? [];
         },
-
     }
 };

@@ -8,7 +8,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid flex-grow" :class="'grid-cols-' + headers.length">
+        <div class="grid flex-grow" :class="gridWidth">
             <div v-for="blankday in blankDaysAtTheStartOfTheMonth" class="bg-gray-300 dark:bg-gray-600" v-if="$store.getters.calendarOptions.type === 'month'">
                 <div class="h-full border border-gray-200 dark:border-gray-500 text-left p-1 text-sm">{{ blankday }}</div>
             </div>
@@ -106,6 +106,20 @@ export default {
                 .getDay()
 
             return createArray(6 - endOfMonthDay);
+        },
+        gridWidth() {
+            if (this.headers.length === 7) {
+                return 'grid-cols-7';
+            }
+            if (this.headers.length === 4) {
+                return 'grid-cols-4';
+            }
+            
+            if (this.headers.length === 5) {
+                return 'grid-cols-5';
+            }
+            
+            return 'grid-cols-1';
         }
     },
     methods: {

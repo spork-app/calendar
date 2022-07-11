@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export default {
     state: {
         calendars: [],
@@ -67,28 +69,33 @@ export default {
         calendarOptions(state) {
             return state.calendarOptions
         },
-        events(state) {
-            return state.calendars.reduce((calendars, calendar) => ({
-                ...calendar.repeatable
-                    .map(event => ({ event, occurrences: event.nextOccurrences(dayjs().startOf('month'), dayjs().endOf('month'))}))
-                    .reduce((d, { event: { calendarEvent }, occurrences }) => {
-                        return {
-                            ...occurrences.reduce((allEvents, rule) => {
-                                const calEvent = new CalendarEvent(calendarEvent);
-                                calEvent.setDate(dayjs(rule));
-                                return {
-                                    ...allEvents,
-                                    [dayjs(rule).format('YYYY-MM-DD')]: [
-                                        ...(allEvents[dayjs(rule).format('YYYY-MM-DD')] ? (
-                                            allEvents[dayjs(rule).format('YYYY-MM-DD')]
-                                        ) : []),
-                                        calEvent,
-                                    ]
-                                }
-                            }, d)
-                        };
-                    }, {})
-            }), {})
+        events(state, getters) {
+            return getters.datesInSelectedMonth.reduce((events, day) => {
+                return getters.calendars.reduce((calendars, calendar) => ({
+                    ...calendars,
+                    ...calendar.repeatable
+                        .map(event => ({ event, occurrences: event.nextOccurrences(dayjs(day).startOf('day'), dayjs(day).endOf('day'))}))
+
+                        // Ensure we're only attempting to render events for the current set of occurrences, where the event has started.
+                        .reduce((d, { event: { calendarEvent }, occurrences }) => {
+                            return {
+                                ...occurrences.reduce((allEvents, rule) => {
+                                    const calEvent = new CalendarEvent(calendarEvent);
+                                    calEvent.setDate(dayjs(rule));
+                                    return {
+                                        ...allEvents,
+                                        [dayjs(rule).format('YYYY-MM-DD')]: [
+                                            ...(allEvents[dayjs(rule).format('YYYY-MM-DD')] ? (
+                                                allEvents[dayjs(rule).format('YYYY-MM-DD')]
+                                            ) : []),
+                                            calEvent,
+                                        ]
+                                    }
+                                }, d)
+                            };
+                        }, {})
+                }), events)
+            }, {});
         },
         fullDaysInMonth(state) {
             return createArray(dayjs(state.calendarOptions.date).daysInMonth());
@@ -168,7 +175,9 @@ export default {
             }
         },
         calendars(state, rootGetters) {
-            return rootGetters?.features?.calendar ?? [];
+            return (rootGetters?.features?.calendar ?? []).concat(
+                rootGetters?.features?.reminders ?? []
+            );
         },
     }
 };

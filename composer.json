@@ -14,5 +14,12 @@
         "psr-4": {
             "Spork\\Calendar\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spork\\Calendar\\CalendarServiceProvider"
+            ]
+        }
     }
 }

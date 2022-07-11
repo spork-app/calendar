@@ -3,6 +3,7 @@
 namespace Spork\Calendar;
 
 use App\Spork;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class CalendarServiceProvider extends ServiceProvider
@@ -28,6 +29,10 @@ class CalendarServiceProvider extends ServiceProvider
             __DIR__ . '/../database/migrations/' => database_path('migrations'),
         ], 'calendar-migrations');
 
-        Spork::addFeature('calendar', 'CalendarIcon', '/calendar');
+        Spork::addFeature('calendar', 'CalendarIcon', '/calendar', 'tool');
+
+        Route::middleware($this->app->make('config')->get('spork.calendar.middleware', ['auth:sanctum']))
+            ->prefix('api/calendar')
+            ->group(__DIR__ . '/../routes/api.php');
     }
 }

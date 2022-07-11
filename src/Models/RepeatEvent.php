@@ -40,6 +40,7 @@ class RepeatEvent extends Model
         'for_second',
         'for_set_position',
         'user_id',
+        'feature_list_id',
     ];
 
     public function repeatable()

@@ -2,9 +2,11 @@
 
 namespace Spork\Calendar;
 
-use App\Spork;
+use Spork\Core\Spork;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Spork\Calendar\Models\RepeatEvent;
+use Spork\Core\Models\FeatureList;
 
 class CalendarServiceProvider extends ServiceProvider
 {
@@ -29,7 +31,12 @@ class CalendarServiceProvider extends ServiceProvider
             __DIR__ . '/../database/migrations/' => database_path('migrations'),
         ], 'calendar-migrations');
 
+        FeatureList::extend('repeatable', function () {
+            return $this->morphMany(RepeatEvent::class, 'repeatable');
+        });
         Spork::addFeature('calendar', 'CalendarIcon', '/calendar', 'tool');
+
+        Spork::loadWith(['repeatable.users.user']);
 
         Route::middleware($this->app->make('config')->get('spork.calendar.middleware', ['auth:sanctum']))
             ->prefix('api/calendar')

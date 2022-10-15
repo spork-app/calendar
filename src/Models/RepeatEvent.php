@@ -2,7 +2,7 @@
 
 namespace Spork\Calendar\Models;
 
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;
 use App\Models\User;
 use App\Models\Userable;
 use DateTime;

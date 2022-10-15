@@ -1,3 +1,3 @@
 <?php
 
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;

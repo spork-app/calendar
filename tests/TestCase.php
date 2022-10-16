@@ -4,7 +4,7 @@ namespace Spork\Calendar\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
-use Spork\Calendar\CalendarServiceProvider.php;
+use Spork\Calendar\CalendarServiceProvider;
 
 class TestCase extends TestbenchTestCase
 {
@@ -20,7 +20,7 @@ class TestCase extends TestbenchTestCase
     protected function getPackageProviders($app)
     {
         return [
-            CalendarServiceProvider.php::class,
+            CalendarServiceProvider::class,
         ];
     }
 }

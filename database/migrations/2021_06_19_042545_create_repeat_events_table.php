@@ -1,9 +1,9 @@
 <?php
 
-use Spork\Core\Models\FeatureList;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Spork\Core\Models\FeatureList;
 
 class CreateRepeatEventsTable extends Migration
 {
@@ -17,17 +17,15 @@ class CreateRepeatEventsTable extends Migration
         Schema::create('repeat_events', function (Blueprint $table) {
             $table->id();
 
-            $table->string("repeatable_type")->nullable();
-            $table->unsignedBigInteger("repeatable_id")->nullable();
-            $table->index(["repeatable_type", "repeatable_id"]);
-
+            $table->string('repeatable_type')->nullable();
+            $table->unsignedBigInteger('repeatable_id')->nullable();
+            $table->index(['repeatable_type', 'repeatable_id']);
 
             $table->string('name');
 
             $table->string('color')->nullable();
             $table->dateTime('date_start');
             $table->dateTime('date_end')->nullable();
-
 
             $table->string('interval')->nullable();
             $table->string('frequency')->nullable();

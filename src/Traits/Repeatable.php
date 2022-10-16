@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Spork\Calendar\Traits;
 
-use Spork\Calendar\Models\RepeatEvent;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use RRule\RRule;
+use Spork\Calendar\Models\RepeatEvent;
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Model
@@ -38,4 +38,3 @@ trait Repeatable
         ]);
     }
 }
-

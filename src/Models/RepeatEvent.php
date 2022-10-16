@@ -2,7 +2,6 @@
 
 namespace Spork\Calendar\Models;
 
-use Spork\Core\Models\FeatureList;
 use App\Models\User;
 use App\Models\Userable;
 use DateTime;
@@ -102,7 +101,7 @@ class RepeatEvent extends Model
             $this->frequency !== null ? ['FREQ' => $this->frequency] : [],
             $this->date_end !== null ? ['UNTIL' => $this->date_end] : []
         ));
-        
+
         return $event->getOccurrencesBefore(now(), true, $numberOfOccurrences);
     }
 }

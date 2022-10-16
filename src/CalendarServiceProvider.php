@@ -2,11 +2,11 @@
 
 namespace Spork\Calendar;
 
-use Spork\Core\Spork;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Spork\Calendar\Models\RepeatEvent;
 use Spork\Core\Models\FeatureList;
+use Spork\Core\Spork;
 
 class CalendarServiceProvider extends ServiceProvider
 {
@@ -28,7 +28,7 @@ class CalendarServiceProvider extends ServiceProvider
     public function register()
     {
         $this->publishes([
-            __DIR__ . '/../database/migrations/' => database_path('migrations'),
+            __DIR__.'/../database/migrations/' => database_path('migrations'),
         ], 'calendar-migrations');
 
         FeatureList::extend('repeatable', function () {
@@ -40,6 +40,6 @@ class CalendarServiceProvider extends ServiceProvider
 
         Route::middleware($this->app->make('config')->get('spork.calendar.middleware', ['auth:sanctum']))
             ->prefix('api/calendar')
-            ->group(__DIR__ . '/../routes/api.php');
+            ->group(__DIR__.'/../routes/api.php');
     }
 }

@@ -35,7 +35,7 @@ class CalendarServiceProvider extends ServiceProvider
         Spork::loadWith(['repeatable.users.user']);
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        $this->mergeConfigFrom(__DIR__ . '/../config/spork.php', 'spork.calendar');
+        $this->mergeConfigFrom(__DIR__.'/../config/spork.php', 'spork.calendar');
         Route::middleware($this->app->make('config')->get('spork.calendar.middleware', ['auth:sanctum']))
             ->prefix('api/calendar')
             ->group(__DIR__.'/../routes/api.php');

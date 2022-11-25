@@ -3,7 +3,7 @@
         <div style="width: 300px;" class="px-2 bg-white dark:bg-gray-700 h-full flex flex-col justify-between w-full">
             <div class="mt-2">
                 <div class="w-full flex flex-wrap justify-between items-center">
-                    <feature-required feature="calendar" :allow-more-than-one="true"></feature-required>
+                    <feature-required feature="calendar" :allow-more-than-one="true" :settings="defaultCalendarSettings"></feature-required>
                     <div>
                         <select :value="$store.getters.calendarOptions.type" @change="changeType" class="py-1 px-2 rounded border-gray-200 dark:border-gray-500 dark:text-gray-100 dark:bg-gray-600">
                             <option value="month">Month</option>
@@ -83,7 +83,11 @@ export default {
     },
     setup() {
         return {
-            dayjs
+            dayjs,
+            defaultCalendarSettings: {
+                start_date: new Date,
+                end_date: new Date,
+            }
         }
     }
 }

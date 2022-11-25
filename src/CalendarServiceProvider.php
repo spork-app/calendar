@@ -27,17 +27,15 @@ class CalendarServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations'),
-        ], 'calendar-migrations');
-
         FeatureList::extend('repeatable', function () {
             return $this->morphMany(RepeatEvent::class, 'repeatable');
         });
         Spork::addFeature('calendar', 'CalendarIcon', '/calendar', 'tool');
 
         Spork::loadWith(['repeatable.users.user']);
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+        $this->mergeConfigFrom(__DIR__ . '/../config/spork.php', 'spork.calendar');
         Route::middleware($this->app->make('config')->get('spork.calendar.middleware', ['auth:sanctum']))
             ->prefix('api/calendar')
             ->group(__DIR__.'/../routes/api.php');
